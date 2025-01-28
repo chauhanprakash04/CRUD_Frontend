@@ -1,0 +1,96 @@
+<div class="container col-8">
+    <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#myModal">
+        Add Employee
+    </button>
+
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">{{modalTitle}}</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="onClose()"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form [formGroup]="empForm">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" formControlName="name" >
+                        <span *ngIf="empForm.get('name')?.invalid && empForm.get('name')?.touched" class="err-text">this field is required</span>
+                        <label for="gender">Gender</label>
+                        <input type="text" class="form-control" formControlName="gender">
+                        <span *ngIf="empForm.get('gender')?.invalid && empForm.get('gender')?.touched" class="err-text">this field is required</span>
+                        <label for="age">Age</label>
+                        <input type="number" class="form-control" formControlName="age">
+                        <span *ngIf="empForm.get('age')?.invalid && empForm.get('age')?.touched" class="err-text">this field is required</span>
+                        <label for="salary">Salary</label>
+                        <input type="number" class="form-control" formControlName="salary">
+                        <span *ngIf="empForm.get('salary')?.invalid && empForm.get('salary')?.touched" class="err-text">this field is required</span>
+                        <label for="city">City</label>
+                        <input type="text" class="form-control" formControlName="city">
+                        <span *ngIf="empForm.get('city')?.invalid && empForm.get('city')?.touched" class="err-text">this field is required</span>
+                        <div class="mt-2 d-flex justify-content-end">
+                            <button class="btn btn-success" data-bs-dismiss="modal" (click)="onSubmit()" [disabled]="!empForm.valid">Save</button>
+                            <button type="submit" class="btn btn-danger mx-2" data-bs-dismiss="modal" (click)="onClose()">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table table-hover table-bordered rounded">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Salary</th>
+                <th>City</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let employee of employees">
+                <td>{{ employee.id }}</td>
+                <td>{{ employee.name }}</td>
+                <td>{{ employee.gender }}</td>
+                <td>{{ employee.age }}</td>
+                <td>{{ employee.salary }}</td>
+                <td>{{ employee.city }}</td>
+                <td>
+                    <button class="btn btn-success btn-sm m-2" data-bs-toggle="modal" data-bs-target="#myModal" (click)="openEditModal(employee)">Edit</button>
+                    <button class="btn btn-danger btn-sm" (click)="onDelete(employee.id)">Delete</button>
+                    <button class="btn btn-primary btn-sm m-2" data-bs-toggle="modal" data-bs-target="#detailmodal" (click)="getDetails(employee.id)">Details</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="modal" id="detailmodal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Employee Details</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>Employee Name:</h5>
+                    <p class="px-2">{{result.name}}</p>
+                    <h5>Employee Gender:</h5>
+                    <p class="px-2">{{result.gender}}</p>
+                    <h5>Employee Age:</h5>
+                    <p class="px-2">{{result.age}}</p>
+                    <h5>Employee Salary</h5>
+                    <p class="px-2">{{result.salary}}</p>
+                    <h5>Employee City</h5>
+                    <p class="px-2">{{result.city}}</p>
+                    <button type="submit" class="btn btn-danger mx-2" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
